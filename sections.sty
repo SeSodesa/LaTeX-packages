@@ -1,0 +1,38 @@
+% This is a LaTeX package containing theorem definitions
+% 
+% (c) Santtu Söderholm
+%
+%% This program can be redistributed and/or modified under the terms
+%% of the LaTeX Project Public License Distributed from CTAN archives
+%% in directory macros/latex/base/lppl.txt.
+%
+\NeedsTeXFormat{LaTeX2e}[1994/06/01]
+\ProvidesPackage{theorems}[2017/11/03 V1.0 Theorem definitions]
+\def\hi{This is a package containing section title definitions}
+\let\myDate\date
+
+\RequirePackage[x11names,table]{xcolor}
+\RequirePackage{xparse}
+
+% FOR STYLING THE SECTION HEADINGS
+\usepackage{sectsty}
+	\chapterfont{\color{SkyBlue4}}
+	\sectionfont{\color{SkyBlue4}}
+	\subsectionfont{\color{SkyBlue4}}
+	\subsubsectionfont{\color{SkyBlue4}}
+	\paragraphfont{\color{SkyBlue4}}
+	
+%LABELED  SECTION HEADINGS INCLUDED IN THE TOC
+% numbered sections
+\NewDocumentCommand{\nchapter}{O{\thechapter} m}{\chapter{#2}\label{cha:#1} }
+\NewDocumentCommand{\nsection}{O{\thesection} m}{\section{#2}\label{sec:#1} }
+\NewDocumentCommand{\nssection}{O{\thesubsection} m}{\subsection{#2}\label{ssec:#1} }
+\NewDocumentCommand{\nsssection}{O{\thesubsubsection} m}{\subsubsection{#2}\label{sssec:#1} }
+% unnumbered sections
+\NewDocumentCommand{\nanchapter}{ m }{\chapter*{#1}\addcontentsline{toc}{chapter}{#1}}
+\NewDocumentCommand{\nansection}{ m }{\section*{#1}\addcontentsline{toc}{section}{#1}}
+\NewDocumentCommand{\nanssection}{ m }{\subsection*{#1}\addcontentsline{toc}{subsection}{#1}}
+\NewDocumentCommand{\nansssection}{ m }{\subsubsection*{#1}\addcontentsline{toc}{subsubsection}{#1}}
+
+
+\endinput

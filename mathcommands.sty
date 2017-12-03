@@ -1,0 +1,486 @@
+% This is a LaTeX package containing math commands
+% 
+% (c) Santtu Söderholm
+%
+%% This program can be redistributed and/or modified under the terms
+%% of the LaTeX Project Public License Distributed from CTAN archives
+%% in directory macros/latex/base/lppl.txt.
+%
+\NeedsTeXFormat{LaTeX2e}[1994/06/01]
+\ProvidesPackage{mathcommands}[2017/11/03 V1.0 Math commands]
+\RequirePackage{
+	mathtools,
+	xparse,
+	tabularx,
+	bm,
+	amssymb,
+	centernot % centers the crossover line
+}
+\RequirePackage{	breqn} % Automatic linebreaks for long equations, among other things
+\def\hi{This is a package containing math commands}
+\let\myDate\date
+
+% Equation numbering
+	\numberwithin{equation}{section}
+
+
+% Math mode columns for array
+\newcolumntype{L}{>{$}l<{$}}
+\newcolumntype{C}{>{$}c<{$}}
+\newcolumntype{R}{>{$}r<{$}}
+
+% SPACING COMMANDS
+\newcommand{\mand}{\quad \text{ja}\quad}
+\newcommand{\mor}{\quad \text{tai}\quad}
+\newcommand{\mcomma}{,\quad}
+\newcommand{\mwhen}{\quad \text{kun}\quad}
+\newcommand{\mthen}{\quad \text{niin}\quad}
+\newcommand{\mif}{\quad \text{jos}\quad}
+
+\NewDocumentCommand{\oeq}{s m}{
+	\IfBooleanTF{#1}{\stackrel{#2}{=}}{\stackrel{\eqref{eq:#2}}{=}}
+}
+
+
+% MATH OPERATORS
+% General
+\NewDocumentCommand{\e}{}{\mathrm{e}}
+\DeclarePairedDelimiter\pa{(}{)}
+\DeclarePairedDelimiter\brac{[}{]}
+\DeclarePairedDelimiter\lorc{(}{]}
+\DeclarePairedDelimiter\lcro{[}{)}
+\DeclarePairedDelimiter\loro{(}{)}
+\DeclarePairedDelimiter\lcrc{[}{]}
+\DeclarePairedDelimiter\mnote{\vert}{.} % for making notes during aligned derivations
+\NewDocumentCommand{\tnote}{m}{\pa*{\text{#1}}} % notes in text
+\newcommand{\abs}[1]{\left| #1 \right|}
+\newcommand{\norm}[1]{\left\lVert #1\right\rVert}
+\newcommand{\double}[2]{\begin{bmatrix}#1\; #2 \end{bmatrix}^T}
+\newcommand{\triple}[3]{\begin{bmatrix}#1	&	 #2	& #3 \end{bmatrix}^T}
+\NewDocumentCommand{\sinp}{s O{} m}{
+	\IfBooleanTF{#1}{
+		\sin^{#2}\pa*{#3}
+	}{
+		\sin^{#2}#3
+	}
+}
+\NewDocumentCommand{\cosp}{s O{} m}{
+	\IfBooleanTF{#1}{
+		\cos^{#2}\pa*{#3}
+	}{
+		\cos^{#2}#3
+	}
+}
+\NewDocumentCommand{\sinhp}{s O{} m}{
+	\IfBooleanTF{#1}{
+		\sinh^{#2}\pa*{#3}
+	}{
+		\sinh^{#2}#3
+	}
+}
+\NewDocumentCommand{\coshp}{s O{} m}{
+	\IfBooleanTF{#1}{
+		\cosh^{#2}\pa*{#3}
+	}{
+		\cosh^{#2}#3
+	}
+}
+\NewDocumentCommand{\summa}{O{} O{} s m}{
+	\IfBooleanTF{#3}{
+		\sum_{#1}^{#2}\pa*{ #4}
+	}{
+		\sum_{#1}^{#2} #4
+	}
+}
+\newcommand{\powered}[2]{\left(#1\right)^{#2}}
+\newcommand{\tenpower}[2]{#1\cdot 10^{#2}}
+\DeclarePairedDelimiter{\sequ}{\{}{\}}
+\NewDocumentCommand{\seq}{ m O{} O{} }{% A sequence
+	\sequ*{#1}_{#2}^{#3}
+}
+
+
+% Set notation & algebra
+\DeclarePairedDelimiter{\set}{\{}{\}}
+\DeclarePairedDelimiter{\multset}{[}{]}
+\DeclarePairedDelimiter{\perm}{\langle}{\rangle}
+\DeclarePairedDelimiter{\gen}{\langle}{\rangle}
+\newcommand{\nega}[1]{\overline{#1}}
+\newcommand{\id}[1]{\mathrm{id}_{#1}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Nzero}{\mathbb{N}_0}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\binrel}{\leftrightarrow}
+\RenewDocumentCommand{\ker}{m}{\mathrm{ker}\pa*{#1}}
+\NewDocumentCommand{\cha}{m}{\mathrm{char}\pa*{#1}}
+\NewDocumentCommand{\interval}{s m m s}{
+	\IfBooleanTF{#1}{
+		\IfBooleanTF{#4}{
+			\lcrc*{#2,#3}
+		}{
+			\lcro*{#2,#3}
+		}
+	}{
+		\IfBooleanTF{#4}{
+			\lorc*{#2,#3}
+		}{
+			\loro*{#2,#3}
+		}
+	}
+}
+\NewDocumentCommand{\modulo}{s m m}{
+	\IfBooleanTF{#1}{
+		\pa*{#2}\, \mathrm{ mod } \, #3
+	}{
+		#2\, \mathrm{ mod } \, #3
+	}
+}
+\NewDocumentCommand{\lnof}{s m}{% natural log of #2
+	\IfBooleanTF{#1}{
+		\ln\pa*{#2}
+	}{\ln#2
+	}
+}
+\NewDocumentCommand{\lgof}{s m}{% natural log of #2
+	\IfBooleanTF{#1}{
+		\lg\pa*{#2}
+	}{\lg#2
+	}
+}
+\NewDocumentCommand{\Log}{}{\mathrm{Log}}
+\NewDocumentCommand{\logof}{s o m s}{% log of base #2
+	\IfBooleanTF	{#1}{% to \pa or not to \pa
+		\IfBooleanTF{#4}{% to L or not to L
+			\IfNoValueTF{#2}{\Log\pa*{#3}}{\Log_{#2}\pa*{#3}}
+		}{
+			\IfNoValueTF{#2}{\log\pa*{#3}}{\log_{#2}\pa*{#3}}
+		}
+	}{% to \pa or not to \pa
+		\IfBooleanTF{#4}{% to L or not to L
+			\IfNoValueTF{#2}{\Log\,#3}{\Log_{#2}#3}
+		}{
+			\IfNoValueTF{#2}{\log\,#3}{\log_{#2}#3}
+		}		
+	}
+}
+\NewDocumentCommand{\fof}{s O{} m m}{% A function of ...
+	\IfBooleanTF{#1}{
+		\mathrm{#3}^{#2}\pa*{#4}	
+	}{
+		\mathrm{#3}^{#2}\pa*{#4}
+	}
+}
+\NewDocumentCommand{\group}{m m}{\pa*{#1,#2}}
+\NewDocumentCommand{\ring}{m m m}{\pa*{#1,#2,#3}}
+\NewDocumentCommand{\field}{m m m}{\pa*{#1,#2,#3}}
+
+
+% Logic
+\let\lthen\rightarrow
+\let\Lthen\Rightarrow
+% Ftich notation
+\newcounter{tabrowcount}
+\NewDocumentEnvironment{fitch}{O{0.9} O{1}}%
+	{\par\medskip\bgroup\centering\setcounter{tabrowcount}{0}\tabularx{#1\textwidth}{@{\stepcounter{tabrowcount}\thetabrowcount\label{row:\thetabrowcount}.\hspace{1ex}}L*{#2}{C}X}}%
+	{\endtabularx\egroup\par}
+
+
+% Probability & Combinatorics
+\NewDocumentCommand{\factorial}{s m}{
+	\IfBooleanTF{#1}{\pa*{#2}!}{#2!}\,}
+\NewDocumentCommand{\prob}{o m}{
+	\IfValueTF{#1}{
+		P_{#1}\pa*{#2}
+	}{
+		P\pa*{#2}
+	}
+}
+\newcommand{\exval}[1]{\mathbb{E}\pa*{#1}}
+\newcommand{\mean}[1]{\bar{#1}}
+\newcommand{\samplemean}{\frac{1}{n}\sum_{i=1}^{n} X_i}
+\newcommand{\Var}[1]{\mathrm{Var}\pa*{#1}}
+\newcommand{\Ndist}[2]{\mathrm{N}\pa*{#1}}
+\newcommand{\chidist}[1]{\chi^2\pa*{#1}}
+\newcommand{\tdist}[1]{\mathrm{t}\pa*{#1}}
+\newcommand{\Fdist}[2]{\mathrm{F}\pa*{#1,#2}}
+\newcommand{\est}[1]{\widehat{#1}}
+\newcommand{\MSE}[1]{\mathrm{MSE}\pa*{#1}}
+\newcommand{\lowtollim}{\widehat{\theta}_{L}}
+\newcommand{\uptollim}{\widehat{\theta}_{U}}
+\newcommand{\median}{\widetilde{\mu}}
+
+
+% Analysis (including multivariate)
+\NewDocumentCommand{\bigo}{m}{
+	\mathcal{O}\pa*{#1}
+}
+\NewDocumentCommand{\partsum}{ s O{N} d<> }{
+	\IfValueTF{#3}{
+		\IfBooleanTF{#1}{
+			S_{#2}\pa*{#3}
+		}{
+			S_{#2}#3
+		}	
+	}{
+		S_{#2}
+	}
+}
+\NewDocumentCommand{\dif}{s O{}}{% a differential operator
+	\IfBooleanTF{#1}{
+		\mathrm{d}\pa*{#2}
+	}{
+		\mathrm{d}#2
+	}	
+}
+\NewDocumentCommand{\integral}{ O{} O{} s m s m}{
+	\IfBooleanTF{#3}{
+		\IfBooleanTF{#5}{
+			\int_{#1}^{#2}\pa*{ #4}\,\dif\pa*{#6}
+		}{
+			\int_{#1}^{#2}\pa*{ #4}\,\dif#6
+		}		
+	}{
+		\IfBooleanTF{#5}{
+			\int_{#1}^{#2} #4\,\dif\pa*{#6}
+		}{
+			\int_{#1}^{#2} #4\,\dif#6
+		}		
+	}
+}
+\NewDocumentCommand{\sij}{O{a} O{b} s m}{% Finnish plug (not the butt kind)
+	\IfBooleanTF{#3}{
+		\bigg/_{\mspace{-15mu}#1}^{#2}\pa*{#4}
+	}{
+		\bigg/_{\mspace{-15mu}#1}^{#2}#4
+	}
+}
+\NewDocumentCommand{\plug}{O{a} O{b} s m}{% English plug
+	\IfBooleanTF{#3}{
+		\brac*{#4}_{#1}^{#2}
+	}{
+		\brac{#4}_{#1}^{#2}
+	}
+}
+\NewDocumentCommand{\plugexp}{s  m m m}{ % EXPANDED PLUG - UNDER CONTRUCTION
+	\IfBooleanTF{#1}{
+		\pa*{\pa*{}} - \pa*{}
+	}{
+	
+	}
+}
+\NewDocumentCommand{\theD}{s O{} m m}{% the derivative
+	\IfBooleanTF{#1}{
+		\frac{\dif^{#2}\pa*{#3}}{\dif#4^{#2}}
+	}{
+		\frac{\dif^{#2}{#3}}{\dif#4^{#2}}
+	}
+}
+\NewDocumentCommand{\theDof}{s O{} m m}{\ensuremath% the derivative of ...
+	\IfBooleanTF{#1}{
+		\frac{\dif^{#2}}{\dif{#4}^{#2}}\pa*{#3}
+	}{
+		\frac{\dif^{#2}}{\dif{#4}^{#2}}#3
+	}
+}
+\NewDocumentCommand{\partialD}{s m m}{% partial derivative
+	\IfBooleanTF{#1}{
+		\frac{\partial\pa*{#2}}{\partial\,#3}
+	}{
+		\frac{\partial\,{#2}}{\partial\,#3}
+	}
+}
+\NewDocumentCommand{\partialDof}{s m m}{
+	\IfBooleanTF{#1}{
+		\frac{\partial}{\partial\,#3}\pa*{#2}
+	}{
+		\frac{\partial}{\partial\,#3}#2
+	}
+}
+\newcommand{\partialDTwice}[2]{\frac{\partial^2#1}{\partial #2^2}} % partial derivative twice
+\newcommand{\nablaof}[1]{\nabla\left(#1\right)}
+\newcommand{\nablaTwoTwice}[1]{\scriptstyle\partialDTwice{#1}{x} + \partialDTwice{2#1}{y}}
+\newcommand{\nablaThreeExpanded}[1]{\scriptstyle\left(\partialD{#1}{x} , \partialD{#1}{y} , \partialD{#1}{z}\right)}
+\newcommand{\nablaThreeTwice}[1]{\partialDTwice{#1}{x} + \partialDTwice{#1}{y} + \partialDTwice{#1}{z}}
+\newcommand{\laplacian}{\left(\frac{\partial^2}{\partial z^2} + \frac{\partial^2}{\partial z^2} + \frac{\partial^2}{\partial z^2}\right)}
+\newcommand{\curl}[1]{\nabla\times #1}
+
+% Linear algebra
+\DeclarePairedDelimiter{\lincomb}{\langle}{\rangle}
+\newcommand{\ve}[1]{\overrightarrow{#1}}
+\newcommand{\vect}[1]{\left(#1\right)}
+\newcommand{\twodet}[4]{\begin{vmatrix}#1&#2\\[1ex] #3 &#4\end{vmatrix}} % 2x2 determinant
+\newcommand{\crossproduct}[6]{%
+	\begin{vmatrix}\bm{i}&\bm{j}& \bm{k}\\[1ex] #1 &#2 &#3 \\[1ex] #4 &#5&#6\end{vmatrix}}
+	
+
+% Complex analysis
+\newcommand\iu{\mathrm{i}}
+\newcommand{\comp}[1]{\overline{#1}}
+\NewDocumentCommand{\Arg}{s m}{% main argument
+\IfBooleanTF{#1}{\mathrm{Arg}\pa*{#2}}{\mathrm{Arg}#2}
+}
+\newcommand{\polar}[2]{#1\pa*{\cos\pa*{#2} + \iu\sin\pa*{#2}}}
+\renewcommand{\Re}[1]{\mathrm{Re}\pa*{#1}}
+\renewcommand{\Im}[1]{\mathrm{Im}\pa*{#1}}
+\NewDocumentCommand{\cexp}{s m m}{
+	\IfBooleanTF{#1}{
+		e^{\pa*{#2}}\pa*{\cosp*{#3} + \iu\sinp*{#3}}
+	}{
+		e^{#2}\pa*{\cosp{#3} + \iu\sinp{#3}}
+	}
+}
+
+\NewDocumentCommand{\csin}{s m}{
+	\IfBooleanTF{#1}{
+		\frac{e^{\iu\pa*{#2}} - e^{-\iu\pa{#2}}}{2\iu}
+		}{
+		\frac{e^{\iu#2} - e^{-\iu#2}}{2\iu}
+	}
+}
+\NewDocumentCommand{\ccos}{s m}{
+	\IfBooleanTF{#1}{
+		\frac{e^{\iu\pa*{#2}} + e^{-\iu\pa{#2}}}{2}
+	}{
+		\frac{e^{\iu#2} + e^{-\iu#2}}{2}
+	}
+}
+\NewDocumentCommand{\csinh}{s m}{
+	\IfBooleanTF{#1}{
+		\frac{e^{\pa*{#2}} - e^{-\pa{#2}}}{2}
+	}{
+		\frac{e^{#2} - e^{-#2}}{2}
+	}
+}
+\NewDocumentCommand{\ccosh}{s m}{
+	\IfBooleanTF{#1}{
+		\frac{e^{\pa*{#2}} + e^{-\pa{#2}}}{2}
+	}{
+		\frac{e^{#2} + e^{-#2}}{2}
+	}
+}
+\NewDocumentCommand{\res}{s m m}{
+	\IfBooleanTF{#1}{
+		\underset{ z=#2 }{ \mathrm{res} }\pa*{#3}
+	}{
+		\underset{ z=#2 }{ \mathrm{res} }#3
+	}
+}
+
+% Fourier analysis
+\NewDocumentCommand{\Fcoeff}{m o D<>{}}{ % the cmplex fourier coefficient
+	\IfNoValueTF{#2}{
+		\widehat{#1}^{#3}	
+	}{
+		\widehat{#1}^{#3}\pa*{#2}
+	}
+}
+\NewDocumentCommand{\FT}{o}{% Fourier transform
+	\IfNoValueTF{#1}{
+		\mathcal{F}
+	}{
+		\mathcal{F}\pa*{#1}
+	}
+}
+\NewDocumentCommand{\invFT}{o}{ % inverse Fourier transform
+	\IfNoValueTF{#1}{
+		\mathcal{F}^{-1}
+	}{
+		\mathcal{F}^{-1}\pa*{#1}
+	}
+}
+\NewDocumentCommand{\Si}{ o }{% the sinc-function
+	\IfValueTF{#1}{
+		\mathrm{Si}\pa*{#1}
+	}{
+		\mathrm{Si}
+	}
+}
+\NewDocumentCommand{\conv}{ m  m o }{% convolution
+	\IfValueTF{#3}{
+		\pa*{#1 * #2}\pa*{#3}
+	}{
+		#1 * #2
+	}
+}
+\NewDocumentCommand{\Dkern}{ O{N} d<>  }{% Dirichlet kernel
+	\IfValueTF{#2}{
+		D_{#1}\pa*{#2}
+	}{
+		D_{#1}
+	}
+}
+\NewDocumentCommand{\Fkern}{ O{N} d<>  }{% Cesaro mean
+	\IfValueTF{#2}{
+		F_{#1}\pa*{#2}
+	}{
+		F_{#1}
+	}
+}
+\NewDocumentCommand{\Csum}{ O{N} d<>  }{% Fejer kernel
+	\IfValueTF{#2}{
+		\sigma_{#1}\pa*{#2}
+	}{
+		\sigma_{#1}
+	}
+}
+\NewDocumentCommand{\Pkern}{ O{r} d<>  }{% Poisson kernel
+	\IfValueTF{#2}{
+		P_{#1}\pa*{#2}
+	}{
+		P_{#1}
+	}
+}
+\NewDocumentCommand{\Amean}{ O{r} d<>  }{% Poisson kernel
+	\IfValueTF{#2}{
+		A_{#1}\pa*{#2}
+	}{
+		A_{#1}
+	}
+}
+\NewDocumentCommand{\indfun}{ O{A} m  }{% the indicator function
+	\chi_{#1}\pa*{ #2 }
+}
+
+% Function spaces and metrics
+\NewDocumentCommand{\Mspace}{m m}{% metric space
+	\pa*{#1,#2}
+}
+\NewDocumentCommand{\Cspace}{ O{1} s m m s}{% continuously differentiable
+	\IfBooleanTF{#2}{
+		\IfBooleanTF{#5}{
+			\mathbf{C}^{#1}\interval*{#3}{#4}*
+		}{
+			\mathbf{C}^{#1}\interval*{#3}{#4}
+		}
+	}{
+		\IfBooleanTF{#5}{
+			\mathbf{C}^{#1}\interval{#3}{#4}*
+		}{
+			\mathbf{C}^{#1}\interval{#3}{#4}
+		}
+	}
+}
+\NewDocumentCommand{\Lspace}{ O{1} s m m s}{% Lebesque
+	\IfBooleanTF{#2}{
+		\IfBooleanTF{#5}{
+			\mathbf{L}^{#1}\interval*{#3}{#4}*
+		}{
+			\mathbf{L}^{#1}\interval*{#3}{#4}
+		}
+	}{
+		\IfBooleanTF{#5}{
+			\mathbf{L}^{#1}\interval{#3}{#4}*
+		}{
+			\mathbf{L}^{#1}\interval{#3}{#4}
+		}
+	}
+}
+\NewDocumentCommand{\Ld}{O{1}}{
+	\mathbf{L}^{#1}
+}
+
+
+\endinput

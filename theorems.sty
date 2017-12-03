@@ -1,0 +1,83 @@
+% This is a LaTeX package containing theorem definitions
+% 
+% (c) Santtu Söderholm
+%
+%% This program can be redistributed and/or modified under the terms
+%% of the LaTeX Project Public License Distributed from CTAN archives
+%% in directory macros/latex/base/lppl.txt.
+%
+\NeedsTeXFormat{LaTeX2e}[1994/06/01]
+\ProvidesPackage{theorems}[2017/11/03 V1.0 Theorem definitions]
+\def\hi{This is a package containing theorem definitions}
+\let\myDate\date
+
+\RequirePackage[x11names,table]{xcolor}
+
+\RequirePackage{
+	amsthm,
+	thmtools,
+	xparse
+}
+\RequirePackage{tikz}
+	\usetikzlibrary{calc}
+
+%QED symbol
+\NewDocumentCommand{\redheart}{}{
+\begin{tikzpicture}[scale=0.15]
+	% heart
+  \draw[red,fill=red] (0,0) .. controls (0,0.75) and (-1.5,1.00) .. (-1.5,2)  arc (180:0:0.75)  -- cycle;
+  \draw[red,fill=red] (0,0) .. controls (0,0.75) and ( 1.5,1.00) .. ( 1.5,2)  arc (0:180:0.75) -- cycle;
+
+  \draw (0.7,1.7) -- (1.7,2.7);
+  \draw (1.7,2.7) -- (1.7,3.2);
+  \draw (1.7,2.7) -- (2.2,2.7);
+  \draw (1.5,2.5) -- (1.5,3);
+  \draw (1.5,2.5) -- (2,2.5);
+\end{tikzpicture}
+}
+
+% ThmTools
+\declaretheoremstyle[
+	headfont=\normalfont\bfseries,
+	bodyfont=\normalfont
+]{mystyle}
+
+	\declaretheorem[style=mystyle,name=Aksiooma,numberwithin=section]{myaxiom}
+	\declaretheorem[style=mystyle,name=Lause,sibling=myaxiom]{mytheorem}
+	\declaretheorem[style=mystyle,name=Apulause,sibling=myaxiom]{mylemma}
+	\declaretheorem[style=mystyle,name=Seurauslause,sibling=myaxiom]{mycorollary}
+	\declaretheorem[style=mystyle,name=Määritelmä,sibling=myaxiom]{mydefinition}
+	\declaretheorem[style=mystyle,name=Huomio,sibling=myaxiom]{myremark}
+	
+	\addto\captionsfinnish{\renewcommand\proofname{\bfseries Todistus.}}
+	\addto\captionsenglish{\renewcommand\proofname{\bfseries Proof.}}
+	
+	\numberwithin{figure}{section}
+	\renewcommand{\qedsymbol}{\redheart}
+	
+% TColorBox
+\RequirePackage[theorems,breakable,skins]{tcolorbox}
+	% aksioomalaatikko
+	\newtcbtheorem[number within=section]{tcbaxiom}{Aksiooma}%
+	{enhanced,breakable, parbox=false, colback=AntiqueWhite1, colframe=SkyBlue3,fonttitle=\large,after=}{axi}	
+	% teoreemalaatikko
+	\newtcbtheorem[use counter from = tcbaxiom]{tcbdefinition}{Määritelmä}%
+	{enhanced,breakable, parbox=false, colback=AntiqueWhite1, colframe=SkyBlue3,fonttitle=\large,after=}{def}
+	% lauselaatikko
+	\newtcbtheorem[use counter from = tcbaxiom]{tcbtheorem}{Lause}%
+	{enhanced,breakable, parbox=false, colback=AntiqueWhite1, colframe=SkyBlue3,fonttitle=\large,after=}{the}
+	% propositiolaatikko
+	\newtcbtheorem[use counter from = tcbaxiom]{tcbproposition}{Propositio}%
+	{enhanced,breakable, parbox=false, colback=AntiqueWhite1, colframe=SkyBlue3,fonttitle=\large,after=}{pro}
+	% lemmalaatikko
+	\newtcbtheorem[use counter from = tcbaxiom]{tcblemma}{Apulause}%
+	{enhanced,breakable, parbox=false, colback=AntiqueWhite1, colframe=SkyBlue3,fonttitle=\large,after=}{lem}
+	% seurauslauselaatikko
+	\newtcbtheorem[use counter from = tcbaxiom]{tcbcorollary}{Seurauslause}%
+	{enhanced,breakable, parbox=false, colback=AntiqueWhite1, colframe=SkyBlue3,fonttitle=\large,after=}{cor}
+	% esimerkkilaatikko
+	\newtcbtheorem[use counter from = tcbaxiom]{tcbexample}{Esimerkki}%
+	{enhanced,breakable, parbox=false, colback=AntiqueWhite1, colframe=SkyBlue3,fonttitle=\large,after=}{exa}
+
+
+\endinput
