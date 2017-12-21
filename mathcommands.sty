@@ -38,7 +38,7 @@
 \newcommand{\mif}{\quad \text{jos}\quad}
 
 \NewDocumentCommand{\oeq}{s m}{
-	\IfBooleanTF{#1}{\stackrel{#2}{=}}{\stackrel{\eqref{eq:#2}}{=}}
+	\IfBooleanTF{#1}{\stackrel{\scriptscriptstyle#2}{=}}{\stackrel{\scriptscriptstyle\eqref{eq:#2}}{=}}
 }
 
 
@@ -105,6 +105,11 @@
 \DeclarePairedDelimiter{\multset}{[}{]}
 \DeclarePairedDelimiter{\perm}{\langle}{\rangle}
 \DeclarePairedDelimiter{\gen}{\langle}{\rangle}
+\NewDocumentCommand{\Pset}{m}{
+	\mathcal{P}\pa*{#1}
+}
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
+\DeclarePairedDelimiter{\ceiling}{\lceil}{\rceil}
 \newcommand{\nega}[1]{\overline{#1}}
 \newcommand{\id}[1]{\mathrm{id}_{#1}}
 \newcommand{\N}{\mathbb{N}}
@@ -112,6 +117,7 @@
 \newcommand{\Z}{\mathbb{Z}}
 \newcommand{\Q}{\mathbb{Q}}
 \newcommand{\R}{\mathbb{R}}
+\newcommand{\Rext}{ \tilde{\mathbb{R}} }
 \newcommand{\C}{\mathbb{C}}
 \newcommand{\binrel}{\leftrightarrow}
 \RenewDocumentCommand{\ker}{m}{\mathrm{ker}\pa*{#1}}
@@ -166,11 +172,11 @@
 		}		
 	}
 }
-\NewDocumentCommand{\fof}{s O{} m m}{% A function of ...
-	\IfBooleanTF{#1}{
-		\mathrm{#3}^{#2}\pa*{#4}	
+\NewDocumentCommand{\fof}{ m D<>{} O{}  s m}{% A function of ...
+	\IfBooleanTF{#4}{
+		\mathrm{#1}_{#2}^{#3}\pa*{#5}	
 	}{
-		\mathrm{#3}^{#2}\pa*{#4}
+		\mathrm{#1}_{#2}^{#3}\pa*{#5}
 	}
 }
 \NewDocumentCommand{\group}{m m}{\pa*{#1,#2}}
@@ -448,6 +454,9 @@
 \NewDocumentCommand{\Mspace}{m m}{% metric space
 	\pa*{#1,#2}
 }
+\NewDocumentCommand{\NLspace}{m m}{% normed linear space
+	\pa*{#1,#2}
+}
 \NewDocumentCommand{\Cspace}{ O{1} s m m s}{% continuously differentiable
 	\IfBooleanTF{#2}{
 		\IfBooleanTF{#5}{
@@ -481,6 +490,27 @@
 \NewDocumentCommand{\Ld}{O{1}}{
 	\mathbf{L}^{#1}
 }
-
+\NewDocumentCommand{\bound}{O{} s m}{ % set boundary
+	\IfBooleanTF{#2}{
+		\partial_{#1} \pa*{#3}
+	}{
+		\partial_{#1} #3		
+	}
+}
+\NewDocumentCommand{\diam}{ O{} m }{ % set diameter
+	\fof{dist}<#1>{ #2}
+}
+\NewDocumentCommand{\dist}{ O{} m m}{ % distance
+	\fof{dist}<#1>{#2, #3}
+}
+\NewDocumentCommand{\acc}{ O{} m}{ % set of accumulation points
+	\fof{acc}<#1>{#2}
+}
+\NewDocumentCommand{\Cl}{ O{} m}{ % closure
+	\fof{Cl}<#1>{#2}
+}
+\NewDocumentCommand{\Int}{ O{} m}{ % interior
+	\fof{Int}<#1>{#2}
+}
 
 \endinput

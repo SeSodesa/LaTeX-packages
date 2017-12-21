@@ -38,8 +38,10 @@
 
 % ThmTools
 \declaretheoremstyle[
+	spaceabove=\parsep\bigskip,
 	headfont=\normalfont\bfseries,
-	bodyfont=\normalfont
+	bodyfont=\normalfont,
+	spacebelow=\parsep\bigskip
 ]{mystyle}
 
 	\declaretheorem[style=mystyle,name=Aksiooma,numberwithin=section]{myaxiom}
@@ -52,6 +54,7 @@
 	\addto\captionsfinnish{\renewcommand\proofname{\bfseries Todistus.}}
 	\addto\captionsenglish{\renewcommand\proofname{\bfseries Proof.}}
 	
+	%\numberwithin{theorem}{chapter}
 	\numberwithin{figure}{section}
 	\renewcommand{\qedsymbol}{\redheart}
 	
