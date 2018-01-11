@@ -38,8 +38,39 @@
 \newcommand{\mif}{\quad \text{jos}\quad}
 
 \NewDocumentCommand{\oeq}{s m}{
-	\IfBooleanTF{#1}{\stackrel{\scriptscriptstyle#2}{=}}{\stackrel{\scriptscriptstyle\eqref{eq:#2}}{=}}
+	\IfBooleanTF{#1}{\stackrel{\mathclap{\; \scriptscriptstyle#2 } }{=}\; }{ \;\stackrel{\mathclap{ \scriptscriptstyle\eqref{eq:#2} } }{=} \; }
 }
+\NewDocumentCommand{\oleq}{s m}{
+	\IfBooleanTF{#1}{\stackrel{\mathclap{\; \scriptscriptstyle#2 } }{=}\; }{ \;\stackrel{\mathclap{ \scriptscriptstyle\eqref{eq:#2} } }{ \leq} \; }
+}
+\NewDocumentCommand{\ogeq}{s m}{
+	\IfBooleanTF{#1}{\stackrel{\;\mathclap{ \scriptscriptstyle#2 } }{\geq}\; }{ \;\stackrel{\mathclap{ \scriptscriptstyle\eqref{eq:#2} } }{ \geq} \; }
+}
+
+
+% ENVIRONMENTS AS COMMANDS
+\NewDocumentCommand{\eq}{s O{\theequation} m}{% equation
+	\IfBooleanTF{#1}{
+		\begin{equation}\label{eq:#2}#3\end{equation}
+	}{
+		\begin{equation*}#3\end{equation*}	
+	}
+}
+\NewDocumentCommand{\al}{s m}{%align
+	\IfBooleanTF{#1}{
+		\begin{align}#2\end{align}
+	}{
+		\begin{align*}#2\end{align*}
+	}
+}
+\NewDocumentCommand{\alat}{s m m}{%align without spacing
+	\IfBooleanTF{#1}{
+		\begin{alignat}{#2}#3\end{alignat}
+	}{
+		\begin{alignat*}{#2}#3\end{alignat*}
+	}
+}
+
 
 
 % MATH OPERATORS
@@ -53,7 +84,7 @@
 \DeclarePairedDelimiter\lcrc{[}{]}
 \DeclarePairedDelimiter\mnote{\vert}{.} % for making notes during aligned derivations
 \NewDocumentCommand{\tnote}{m}{\pa*{\text{#1}}} % notes in text
-\newcommand{\abs}[1]{\left| #1 \right|}
+\DeclarePairedDelimiter{\abs}{|}{|}
 \newcommand{\norm}[1]{\left\lVert #1\right\rVert}
 \newcommand{\double}[2]{\begin{bmatrix}#1\; #2 \end{bmatrix}^T}
 \newcommand{\triple}[3]{\begin{bmatrix}#1	&	 #2	& #3 \end{bmatrix}^T}
@@ -182,12 +213,13 @@
 \NewDocumentCommand{\group}{m m}{\pa*{#1,#2}}
 \NewDocumentCommand{\ring}{m m m}{\pa*{#1,#2,#3}}
 \NewDocumentCommand{\field}{m m m}{\pa*{#1,#2,#3}}
+\NewDocumentCommand{\nest}{ O{} }{\mathcal{N} {#1} }
 
 
 % Logic
 \let\lthen\rightarrow
 \let\Lthen\Rightarrow
-% Ftich notation
+% Fitch notation
 \newcounter{tabrowcount}
 \NewDocumentEnvironment{fitch}{O{0.9} O{1}}%
 	{\par\medskip\bgroup\centering\setcounter{tabrowcount}{0}\tabularx{#1\textwidth}{@{\stepcounter{tabrowcount}\thetabrowcount\label{row:\thetabrowcount}.\hspace{1ex}}L*{#2}{C}X}}%

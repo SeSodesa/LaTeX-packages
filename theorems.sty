@@ -38,10 +38,12 @@
 
 % ThmTools
 \declaretheoremstyle[
+	preheadhook = \vspace{\parsep}\raggedright\begin{minipage}{\textwidth}\noindent\hrulefill,
 	spaceabove=\parsep\bigskip,
 	headfont=\normalfont\bfseries,
 	bodyfont=\normalfont,
-	spacebelow=\parsep\bigskip
+	postfoothook = \noindent\hrulefill\end{minipage}\vspace{2\parsep}\noindent,
+	spacebelow=\parsep\bigskip,
 ]{mystyle}
 
 	\declaretheorem[style=mystyle,name=Aksiooma,numberwithin=section]{myaxiom}
@@ -50,6 +52,7 @@
 	\declaretheorem[style=mystyle,name=Seurauslause,sibling=myaxiom]{mycorollary}
 	\declaretheorem[style=mystyle,name=Määritelmä,sibling=myaxiom]{mydefinition}
 	\declaretheorem[style=mystyle,name=Huomio,sibling=myaxiom]{myremark}
+	\declaretheorem[style=mystyle,name=Esimerkki,sibling=myaxiom]{myexample}
 	
 	\addto\captionsfinnish{\renewcommand\proofname{\bfseries Todistus.}}
 	\addto\captionsenglish{\renewcommand\proofname{\bfseries Proof.}}

@@ -24,15 +24,15 @@
 	
 %LABELED  SECTION HEADINGS INCLUDED IN THE TOC
 % numbered sections
-\NewDocumentCommand{\nchapter}{O{\thechapter} m}{\chapter{#2}\label{cha:#1} }
-\NewDocumentCommand{\nsection}{O{\thesection} m}{\section{#2}\label{sec:#1} }
-\NewDocumentCommand{\nssection}{O{\thesubsection} m}{\subsection{#2}\label{ssec:#1} }
-\NewDocumentCommand{\nsssection}{O{\thesubsubsection} m}{\subsubsection{#2}\label{sssec:#1} }
+\NewDocumentCommand{\nchapter}{ O{\thechapter} m}{\chapter{#2}\label{cha:#1} }
+\NewDocumentCommand{\nsection}{ O{\thesection} m}{\section{#2}\label{sec:#1} }
+\NewDocumentCommand{\nssection}{ O{\thesubsection} m}{\subsection{#2}\label{ssec:#1} }
+\NewDocumentCommand{\nsssection}{ O{\thesubsubsection} m}{\subsubsection{#2}\label{sssec:#1} }
 % unnumbered sections
-\NewDocumentCommand{\nanchapter}{ m }{\chapter*{#1}\addcontentsline{toc}{chapter}{#1}}
-\NewDocumentCommand{\nansection}{ m }{\section*{#1}\addcontentsline{toc}{section}{#1}}
-\NewDocumentCommand{\nanssection}{ m }{\subsection*{#1}\addcontentsline{toc}{subsection}{#1}}
-\NewDocumentCommand{\nansssection}{ m }{\subsubsection*{#1}\addcontentsline{toc}{subsubsection}{#1}}
+\NewDocumentCommand{\nanchapter}{ O{\thechapter} m }{\refstepcounter{chapter}\chapter*{#2}\addcontentsline{toc}{chapter}{#2}\label{cha:#1}}
+\NewDocumentCommand{\nansection}{ O{\thesection} m }{\refstepcounter{section}\section*{#2}\addcontentsline{toc}{section}{#2}\label{sec:#1}}
+\NewDocumentCommand{\nanssection}{ O{\thesubsection} m }{\refstepcounter{subsection}\subsection*{#2}\addcontentsline{toc}{subsection}{#2}\label{ssec:#1}}
+\NewDocumentCommand{\nansssection}{ O{\thesubsubsection} m }{\refstepcounter{subsubsection}\subsubsection*{#2}\addcontentsline{toc}{subsubsection}{#1}\label{sssec:#2}}
 
 
 \endinput
